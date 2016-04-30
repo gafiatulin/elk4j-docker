@@ -10,3 +10,14 @@ services:
                 gelf-address: udp://localhost:12201
                 tag: basic
         command: /bin/sh -c "while sleep 2; do echo Logging; done;"
+    #JVM-Based
+    logback:
+        container_name: logback
+        build: jvm/logback/target/docker
+        logging:
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:12201
+                tag: logback
+        environment:
+            - DEPLOYMENT_TARGET=DOCKER

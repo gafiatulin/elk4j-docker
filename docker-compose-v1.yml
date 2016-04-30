@@ -1,0 +1,25 @@
+#ELK Stack
+elasticsearch:
+    container_name: elasticsearch
+    image: gafiatulin/alpine-elasticsearch
+    ports:
+        - 9200:9200
+    links:
+        - logstash
+logstash:
+    container_name: logstash
+    image: gafiatulin/alpine-logstash
+    ports:
+        - 12201:12201/udp
+    volumes:
+        - ./logstash/config:/etc/logstash/conf.d
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+kibana:
+    container_name: kibana
+    image: gafiatulin/alpine-kibana
+    ports:
+        - 5601:5601
+    links:
+        - elasticsearch
+    environment:
+        - ELASTICSEARCH_URL=http://elasticsearch:9200

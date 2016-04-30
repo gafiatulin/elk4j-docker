@@ -1,0 +1,12 @@
+version: '2'
+services:
+    #Basic
+    basic:
+        container_name: basic
+        image: alpine
+        logging:
+            driver: gelf
+            options:
+                gelf-address: udp://localhost:12201
+                tag: basic
+        command: /bin/sh -c "while sleep 2; do echo Logging; done;"

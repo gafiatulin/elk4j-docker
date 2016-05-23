@@ -25,20 +25,8 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= Seq(
   "ch.qos.logback"       % "logback-classic"          % "1.1.7",
-  "net.logstash.logback" % "logstash-logback-encoder" % "4.6",
+  "net.logstash.logback" % "logstash-logback-encoder" % "4.7",
   "org.codehaus.janino"  % "janino"                   % "2.7.8"
 )
 
-enablePlugins(DockerPlugin)
-
-dockerfile in docker := {
-  val artifact: File = assembly.value
-  val artifactTargetPath = s"/app/${artifact.name}"
-  new Dockerfile {
-    from("java:jre-alpine")
-    copy(artifact, artifactTargetPath)
-    entryPoint("java", "-jar", artifactTargetPath)
-  }
-}
-
-buildOptions in docker := BuildOptions(cache = false)
+assemblyOutputPath in assembly := target.value / "service.jar"

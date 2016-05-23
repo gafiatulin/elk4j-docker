@@ -13,7 +13,7 @@ services:
     #JVM-Based
     logback:
         container_name: logback
-        build: jvm/logback/target/docker
+        build: jvm/logback
         logging:
             driver: gelf
             options:
